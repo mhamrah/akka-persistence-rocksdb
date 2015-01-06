@@ -2,8 +2,6 @@ name := "akka-persistence-rocksdb"
 
 organization := "com.hamrah"
 
-version := "0.1.0-SNAPSHOT"
-
 homepage := Some(url("https://github.com/mhamrah/akka-persistence-rocksdb"))
 
 startYear := Some(2014)
@@ -15,6 +13,8 @@ scmInfo := Some(
     Some("scm:git:git@github.com:mhamrah/akka-persistence-rocksdb.git")
   )
 )
+
+licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 /* scala versions and options */
 scalaVersion := "2.10.4"
@@ -80,3 +80,7 @@ excludeFilter in (Test, unmanagedSources) := HiddenFileFilter
 resourceDirectory in Compile := baseDirectory.value / "resources"
 
 resourceDirectory in Test := baseDirectory.value / "resources"
+
+seq(bintrayPublishSettings:_*)
+
+releaseSettings
