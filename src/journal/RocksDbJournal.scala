@@ -58,7 +58,7 @@ class RocksDBJournal extends AsyncWriteJournal with ActorLogging {
       iter.seek(getKey(persistenceId, seq))
       var continue = true
 
-      while(iter.isValid && continue && seq <= toSequenceNr) {
+      while (iter.isValid && continue && seq <= toSequenceNr) {
         val parts = parseKey(iter.key)
         if (parts(0) == persistenceId) {
 
@@ -69,7 +69,7 @@ class RocksDBJournal extends AsyncWriteJournal with ActorLogging {
         } else {
           continue = false
         }
-        seq+=1
+        seq += 1
         iter.next()
       }
 
@@ -89,8 +89,8 @@ class RocksDBJournal extends AsyncWriteJournal with ActorLogging {
         val parts = parseKey(iter.key)
         seq = parts(1).toLong
 
-        if(parts(0) == persistenceId) {
-          val payload = serialization.deserialize(iter.value, classOf[PersistentRepr]).get.update(deleted=parts(2).toBoolean)
+        if (parts(0) == persistenceId) {
+          val payload = serialization.deserialize(iter.value, classOf[PersistentRepr]).get.update(deleted = parts(2).toBoolean)
           replayCallback(payload)
           continue = (parts.head == persistenceId)
         } else {
@@ -111,7 +111,7 @@ class RocksDBJournal extends AsyncWriteJournal with ActorLogging {
       var continue = true
       while (iter.isValid && continue) {
         val parts = parseKey(iter.key)
-        if(parts(0)==persistenceId) {
+        if (parts(0) == persistenceId) {
           seq = parts(1).toLong
           continue = parts.head == persistenceId
         } else {
