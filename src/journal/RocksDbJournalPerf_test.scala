@@ -16,9 +16,12 @@ class RocksDbJournalPerfSpec
 
   lazy val config = ConfigFactory.parseString(
     s"""
-      |rocksdb-journal.dir = "target/journal-perf-spec"
-      |akka.persistence.journal.plugin = "rocksdb-journal"
-    """.stripMargin
+      akka.test.timefactor = 3
+      akka.persistence.snapshot-store.plugin = "akka.persistence.snapshot-store.local"
+      akka.persistence.snapshot-store.local.dir = "target/snapshots"
+      rocksdb-journal.dir = "target/journal-perf-spec"
+      akka.persistence.journal.plugin = "rocksdb-journal"
+    """
   )
 
   val storageLocations = List(
